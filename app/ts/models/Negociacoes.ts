@@ -1,4 +1,4 @@
-import { Negociacao } from './Negociacao';
+import { Negociacao } from './Negociacao.js';
 
 export class Negociacoes {
     private _negociacoes: Negociacao[] = [];

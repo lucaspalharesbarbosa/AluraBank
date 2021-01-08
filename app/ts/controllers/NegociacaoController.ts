@@ -1,7 +1,7 @@
-import { Negociacao } from '../models/Negociacao';
-import { Negociacoes } from '../models/Negociacoes';
-import { NegociacoesView } from '../views/NegociacoesView';
-import { MensagemView } from '../views/MensagemView';
+import { NegociacoesView } from '../views/NegociacoesView.js';
+import { MensagemView } from '../views/MensagemView.js';
+import { Negociacoes } from '../models/Negociacoes.js';
+import { Negociacao } from '../models/Negociacao.js';
 
 export class NegociacaoController {
     private _inputData: JQuery;

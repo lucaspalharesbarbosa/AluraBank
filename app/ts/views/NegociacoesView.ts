@@ -1,5 +1,5 @@
-import { View } from './View';
-import { Negociacoes } from '../models/Negociacoes';
+import { View } from './View.js';
+import { Negociacoes } from '../models/Negociacoes.js';
 
 export class NegociacoesView extends View<Negociacoes> {
     template(negociacoesModel: Negociacoes): string {
