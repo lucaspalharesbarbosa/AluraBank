@@ -46,6 +46,26 @@ System.register(["../views/index.js", "../models/index.js", "../helpers/decorato
                 ehFimDeSemana(data) {
                     return data.getDay() == DiaSemana.Sabado || data.getDay() == DiaSemana.Domingo;
                 }
+                importarDados() {
+                    function isOk(resposta) {
+                        if (resposta.ok) {
+                            return resposta;
+                        }
+                        else {
+                            throw new Error(resposta.statusText);
+                        }
+                    }
+                    fetch('http://localhost:8080/dados')
+                        .then(resposta => isOk(resposta))
+                        .then(resposta => resposta.json())
+                        .then((dados) => {
+                        dados
+                            .map(dado => new index_js_2.Negociacao(new Date(), dado.vezes, dado.montante))
+                            .forEach(negociacao => this._negociacoes.adicionar(negociacao));
+                        this._negociacoesView.update(this._negociacoes);
+                    })
+                        .catch(erro => console.log(erro.message));
+                }
             };
             __decorate([
                 index_js_3.domInject('#data')
