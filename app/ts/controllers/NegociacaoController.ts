@@ -1,3 +1,4 @@
+import { logarTempoExecucao } from '../helpers/decorators/index.js'
 import { NegociacoesView, MensagemView } from '../views/index.js';
 import { Negociacoes, Negociacao } from '../models/index.js';
 
@@ -16,6 +17,7 @@ export class NegociacaoController {
         this._negociacoesView.update(this._negociacoes);
     }
 
+    @logarTempoExecucao()
     adicionar(event: Event) {
         event.preventDefault(); // serve para não recarregar a tela ao dar submit
 

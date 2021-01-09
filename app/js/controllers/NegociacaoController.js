@@ -1,7 +1,13 @@
-System.register(["../views/index.js", "../models/index.js"], function (exports_1, context_1) {
+System.register(["../helpers/decorators/index.js", "../views/index.js", "../models/index.js"], function (exports_1, context_1) {
     "use strict";
+    var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+        var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+        else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+        return c > 3 && r && Object.defineProperty(target, key, r), r;
+    };
     var __moduleName = context_1 && context_1.id;
-    var index_js_1, index_js_2, NegociacaoController, DiaSemana;
+    var index_js_1, index_js_2, index_js_3, NegociacaoController, DiaSemana;
     return {
         setters: [
             function (index_js_1_1) {
@@ -9,14 +15,17 @@ System.register(["../views/index.js", "../models/index.js"], function (exports_1
             },
             function (index_js_2_1) {
                 index_js_2 = index_js_2_1;
+            },
+            function (index_js_3_1) {
+                index_js_3 = index_js_3_1;
             }
         ],
         execute: function () {
             NegociacaoController = class NegociacaoController {
                 constructor() {
-                    this._negociacoes = new index_js_2.Negociacoes();
-                    this._negociacoesView = new index_js_1.NegociacoesView('#negociacoesView');
-                    this._mensagemView = new index_js_1.MensagemView('#mensagemView');
+                    this._negociacoes = new index_js_3.Negociacoes();
+                    this._negociacoesView = new index_js_2.NegociacoesView('#negociacoesView');
+                    this._mensagemView = new index_js_2.MensagemView('#mensagemView');
                     this._inputData = $('#data');
                     this._inputQuantidade = $('#quantidade');
                     this._inputValor = $('#valor');
@@ -29,7 +38,7 @@ System.register(["../views/index.js", "../models/index.js"], function (exports_1
                         this._mensagemView.update('Somentes negociações em dias úteis são permitidas.');
                         return;
                     }
-                    var negociacao = new index_js_2.Negociacao(data, parseInt(this._inputQuantidade.val()), parseFloat(this._inputValor.val()));
+                    var negociacao = new index_js_3.Negociacao(data, parseInt(this._inputQuantidade.val()), parseFloat(this._inputValor.val()));
                     this._negociacoes.adicionar(negociacao);
                     this._negociacoesView.update(this._negociacoes);
                     this._mensagemView.update('Negociação adicionada com sucesso!');
@@ -41,6 +50,9 @@ System.register(["../views/index.js", "../models/index.js"], function (exports_1
                     return data.getDay() == DiaSemana.Sabado || data.getDay() == DiaSemana.Domingo;
                 }
             };
+            __decorate([
+                index_js_1.logarTempoExecucao()
+            ], NegociacaoController.prototype, "adicionar", null);
             exports_1("NegociacaoController", NegociacaoController);
             (function (DiaSemana) {
                 DiaSemana[DiaSemana["Domingo"] = 0] = "Domingo";
