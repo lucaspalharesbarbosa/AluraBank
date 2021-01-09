@@ -1,6 +1,6 @@
 import { NegociacoesView, MensagemView } from '../views/index.js';
 import { Negociacoes, Negociacao, NegociacaoApi } from '../models/index.js';
-import { domInject } from '../helpers/decorators/index.js';
+import { domInject, throttle } from '../helpers/decorators/index.js';
 
 export class NegociacaoController {
     @domInject('#data')
@@ -20,9 +20,8 @@ export class NegociacaoController {
         this._negociacoesView.update(this._negociacoes);
     }
 
-    adicionar(event: Event) {
-        event.preventDefault(); // serve para não recarregar a tela ao dar submit
-
+    @throttle(500)
+    adicionar() {
         let data = this.obterData(this._inputData.val());
 
         if (this.ehFimDeSemana(data)) {
@@ -51,6 +50,7 @@ export class NegociacaoController {
         return data.getDay() == DiaSemana.Sabado || data.getDay() == DiaSemana.Domingo;
     }
 
+    @throttle(500)
     importarDados() {
         function isOk(resposta: Response) {
             if (resposta.ok) {
@@ -61,16 +61,16 @@ export class NegociacaoController {
         }
 
         fetch('http://localhost:8080/dados')
-            .then(resposta => isOk(resposta))
-            .then(resposta => resposta.json())
-            .then((dados: NegociacaoApi[]) => {
-                dados
-                    .map(dado => new Negociacao(new Date(), dado.vezes, dado.montante))
-                    .forEach(negociacao => this._negociacoes.adicionar(negociacao))
+        .then(resposta => isOk(resposta))
+        .then(resposta => resposta.json())
+        .then((dados: NegociacaoApi[]) => {
+            dados
+                .map(dado => new Negociacao(new Date(), dado.vezes, dado.montante))
+                .forEach(negociacao => this._negociacoes.adicionar(negociacao))
 
-                this._negociacoesView.update(this._negociacoes);
-            })
-            .catch(erro => console.log(erro.message));
+            this._negociacoesView.update(this._negociacoes);
+        })
+        .catch(erro => console.log(erro.message));
     }
 }
 
