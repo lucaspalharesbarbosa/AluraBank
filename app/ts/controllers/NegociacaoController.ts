@@ -19,8 +19,15 @@ export class NegociacaoController {
     adicionar(event: Event) {
         event.preventDefault(); // serve para não recarregar a tela ao dar submit
 
-        const negociacao = new Negociacao(
-            new Date(this._inputData.val().replace(/-/g, ',')),
+        let data = this.obterData(this._inputData.val());
+
+        if (this.ehFimDeSemana(data)) {
+            this._mensagemView.update('Somentes negociações em dias úteis são permitidas.');
+            return;
+        }
+
+        var negociacao = new Negociacao(
+            data,
             parseInt(this._inputQuantidade.val()),
             parseFloat(this._inputValor.val())
         );
@@ -31,4 +38,22 @@ export class NegociacaoController {
 
         this._mensagemView.update('Negociação adicionada com sucesso!');
     }
+
+    private obterData(data: string): Date {
+        return new Date(data.replace(/-/g, ','));
+    }
+
+    private ehFimDeSemana(data: Date): boolean {
+        return data.getDay() == DiaSemana.Sabado || data.getDay() == DiaSemana.Domingo;
+    }
+}
+
+enum DiaSemana {
+    Domingo,
+    Segunda,
+    Terca,
+    Quarta,
+    Quinta,
+    Sexta,
+    Sabado
 }
