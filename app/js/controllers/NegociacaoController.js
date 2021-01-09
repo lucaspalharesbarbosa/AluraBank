@@ -1,4 +1,4 @@
-System.register(["../helpers/decorators/index.js", "../views/index.js", "../models/index.js"], function (exports_1, context_1) {
+System.register(["../views/index.js", "../models/index.js", "../helpers/decorators/index.js"], function (exports_1, context_1) {
     "use strict";
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -23,12 +23,9 @@ System.register(["../helpers/decorators/index.js", "../views/index.js", "../mode
         execute: function () {
             NegociacaoController = class NegociacaoController {
                 constructor() {
-                    this._negociacoes = new index_js_3.Negociacoes();
-                    this._negociacoesView = new index_js_2.NegociacoesView('#negociacoesView');
-                    this._mensagemView = new index_js_2.MensagemView('#mensagemView');
-                    this._inputData = $('#data');
-                    this._inputQuantidade = $('#quantidade');
-                    this._inputValor = $('#valor');
+                    this._negociacoes = new index_js_2.Negociacoes();
+                    this._negociacoesView = new index_js_1.NegociacoesView('#negociacoesView');
+                    this._mensagemView = new index_js_1.MensagemView('#mensagemView');
                     this._negociacoesView.update(this._negociacoes);
                 }
                 adicionar(event) {
@@ -38,7 +35,7 @@ System.register(["../helpers/decorators/index.js", "../views/index.js", "../mode
                         this._mensagemView.update('Somentes negociações em dias úteis são permitidas.');
                         return;
                     }
-                    var negociacao = new index_js_3.Negociacao(data, parseInt(this._inputQuantidade.val()), parseFloat(this._inputValor.val()));
+                    var negociacao = new index_js_2.Negociacao(data, parseInt(this._inputQuantidade.val()), parseFloat(this._inputValor.val()));
                     this._negociacoes.adicionar(negociacao);
                     this._negociacoesView.update(this._negociacoes);
                     this._mensagemView.update('Negociação adicionada com sucesso!');
@@ -51,8 +48,14 @@ System.register(["../helpers/decorators/index.js", "../views/index.js", "../mode
                 }
             };
             __decorate([
-                index_js_1.logarTempoExecucao()
-            ], NegociacaoController.prototype, "adicionar", null);
+                index_js_3.domInject('#data')
+            ], NegociacaoController.prototype, "_inputData", void 0);
+            __decorate([
+                index_js_3.domInject('#quantidade')
+            ], NegociacaoController.prototype, "_inputQuantidade", void 0);
+            __decorate([
+                index_js_3.domInject('#valor')
+            ], NegociacaoController.prototype, "_inputValor", void 0);
             exports_1("NegociacaoController", NegociacaoController);
             (function (DiaSemana) {
                 DiaSemana[DiaSemana["Domingo"] = 0] = "Domingo";
