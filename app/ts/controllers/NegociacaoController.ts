@@ -1,6 +1,7 @@
 import { NegociacoesView, MensagemView } from '../views/index.js';
 import { Negociacoes, Negociacao, NegociacaoApi } from '../models/index.js';
 import { domInject, throttle } from '../helpers/decorators/index.js';
+import { NegociacaoService, HandlerFunction } from '../services/NegociacaoService.js'
 
 export class NegociacaoController {
     @domInject('#data')
@@ -12,6 +13,7 @@ export class NegociacaoController {
     @domInject('#valor')
     private _inputValor: JQuery;
 
+    private _service = new NegociacaoService();
     private _negociacoes = new Negociacoes();
     private _negociacoesView = new NegociacoesView('#negociacoesView');
     private _mensagemView = new MensagemView('#mensagemView');
@@ -52,25 +54,20 @@ export class NegociacaoController {
 
     @throttle(500)
     importarDados() {
-        function isOk(resposta: Response) {
-            if (resposta.ok) {
-                return resposta;
-            } else {
-                throw new Error(resposta.statusText)
-            }
-        }
+        this._service
+            .obterNegociacoes((resposta) => {
+                if (resposta.ok) {
+                    return resposta;
+                } else {
+                    throw new Error(resposta.statusText)
+                }
+            })
+            .then(negociacoes => {
+                negociacoes
+                    .forEach((negociacao: Negociacao) => this._negociacoes.adicionar(negociacao))
 
-        fetch('http://localhost:8080/dados')
-        .then(resposta => isOk(resposta))
-        .then(resposta => resposta.json())
-        .then((dados: NegociacaoApi[]) => {
-            dados
-                .map(dado => new Negociacao(new Date(), dado.vezes, dado.montante))
-                .forEach(negociacao => this._negociacoes.adicionar(negociacao))
-
-            this._negociacoesView.update(this._negociacoes);
-        })
-        .catch(erro => console.log(erro.message));
+                this._negociacoesView.update(this._negociacoes);
+            });
     }
 }
 
