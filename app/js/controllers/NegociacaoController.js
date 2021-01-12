@@ -1,4 +1,4 @@
-System.register(["../views/index.js", "../models/index.js", "../helpers/decorators/index.js", "../services/NegociacaoService.js"], function (exports_1, context_1) {
+System.register(["../views/index.js", "../models/index.js", "../helpers/decorators/index.js", "../services/NegociacaoService.js", "../helpers/index.js"], function (exports_1, context_1) {
     "use strict";
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -7,7 +7,7 @@ System.register(["../views/index.js", "../models/index.js", "../helpers/decorato
         return c > 3 && r && Object.defineProperty(target, key, r), r;
     };
     var __moduleName = context_1 && context_1.id;
-    var index_js_1, index_js_2, index_js_3, NegociacaoService_js_1, NegociacaoController, DiaSemana;
+    var index_js_1, index_js_2, index_js_3, NegociacaoService_js_1, index_js_4, NegociacaoController, DiaSemana;
     return {
         setters: [
             function (index_js_1_1) {
@@ -21,6 +21,9 @@ System.register(["../views/index.js", "../models/index.js", "../helpers/decorato
             },
             function (NegociacaoService_js_1_1) {
                 NegociacaoService_js_1 = NegociacaoService_js_1_1;
+            },
+            function (index_js_4_1) {
+                index_js_4 = index_js_4_1;
             }
         ],
         execute: function () {
@@ -40,6 +43,7 @@ System.register(["../views/index.js", "../models/index.js", "../helpers/decorato
                     }
                     var negociacao = new index_js_2.Negociacao(data, parseInt(this._inputQuantidade.val()), parseFloat(this._inputValor.val()));
                     this._negociacoes.adicionar(negociacao);
+                    index_js_4.EscreverNoConsole(negociacao, this._negociacoes);
                     this._negociacoesView.update(this._negociacoes);
                     this._mensagemView.update('Negociação adicionada com sucesso!');
                 }
