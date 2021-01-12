@@ -1,3 +1,3 @@
-export abstract class Imprimivel {
-    abstract logConsole(): void;
+export interface Imprimivel {
+    logConsole(): void;
 }

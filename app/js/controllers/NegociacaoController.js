@@ -63,8 +63,12 @@ System.register(["../views/index.js", "../models/index.js", "../helpers/decorato
                             throw new Error(resposta.statusText);
                         }
                     })
-                        .then(negociacoes => {
-                        negociacoes
+                        .then(negociacoesImportar => {
+                        const negociacoesJaImportadas = this._negociacoes.toArray();
+                        negociacoesImportar
+                            .filter(negociacao => !negociacoesJaImportadas
+                            .some(negociacaoJaImportada => negociacao.ehIgual(negociacaoJaImportada)));
+                        negociacoesImportar
                             .forEach((negociacao) => this._negociacoes.adicionar(negociacao));
                         this._negociacoesView.update(this._negociacoes);
                     });

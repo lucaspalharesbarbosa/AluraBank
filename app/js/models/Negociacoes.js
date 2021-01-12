@@ -1,4 +1,4 @@
-System.register(["../helpers/decorators/index.js", "./Imprimivel.js"], function (exports_1, context_1) {
+System.register(["../helpers/decorators/index.js"], function (exports_1, context_1) {
     "use strict";
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -7,20 +7,16 @@ System.register(["../helpers/decorators/index.js", "./Imprimivel.js"], function 
         return c > 3 && r && Object.defineProperty(target, key, r), r;
     };
     var __moduleName = context_1 && context_1.id;
-    var index_js_1, Imprimivel_js_1, Negociacoes;
+    var index_js_1, Negociacoes;
     return {
         setters: [
             function (index_js_1_1) {
                 index_js_1 = index_js_1_1;
-            },
-            function (Imprimivel_js_1_1) {
-                Imprimivel_js_1 = Imprimivel_js_1_1;
             }
         ],
         execute: function () {
-            Negociacoes = class Negociacoes extends Imprimivel_js_1.Imprimivel {
+            Negociacoes = class Negociacoes {
                 constructor() {
-                    super(...arguments);
                     this._negociacoes = [];
                 }
                 adicionar(negociacao) {
@@ -32,6 +28,9 @@ System.register(["../helpers/decorators/index.js", "./Imprimivel.js"], function 
                 logConsole() {
                     console.log('Impressão');
                     console.log(JSON.stringify(this._negociacoes));
+                }
+                ehIgual(negociacoes) {
+                    return JSON.stringify(this._negociacoes) == JSON.stringify(negociacoes.toArray());
                 }
             };
             __decorate([
