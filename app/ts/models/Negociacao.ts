@@ -20,7 +20,6 @@ export class Negociacao implements MeuObjeto<Negociacao> {
     }
 
     ehIgual(negociacao: Negociacao): boolean {
-        debugger;
         return this.data.getDate() == negociacao.data.getDate()
             && this.data.getMonth() == negociacao.data.getMonth()
             && this.data.getFullYear() == negociacao.data.getFullYear();
